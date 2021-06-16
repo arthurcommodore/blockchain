@@ -37,4 +37,18 @@ describe('Blockchain', () => {
         bc2.chain[bc2.chain.length - 1].data = '0U$'
         expect(bc.isValidChain(bc2.chain)).toBe(false)
     })
+
+    it('replaces the chain a valid chain', () => {
+        bc2.addBlock('900U$')
+        bc.replaceChain(bc2.chain)
+
+        expect(bc.chain).toEqual(bc2.chain)
+    })
+
+    it('does not replace the chain with one of less or equal legth', () => {
+        bc.addBlock('370U$')
+        bc.replaceChain(bc2.chain)
+
+        expect(bc.chain).not.toEqual(bc2.chain)
+    })
 })
