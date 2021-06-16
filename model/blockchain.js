@@ -13,23 +13,20 @@ class Blockchain {
     }
 
     isValidChain(chain) {
-        if(JSON.stringify(chain[0]) !== JSON.stringify(Block.genesis))
+        if(JSON.stringify(chain[0]) !== JSON.stringify(Block.genesis())) 
             return false
 
         for(let i = 1; i < chain.length; i++) {
             const block = chain[i] 
             const lastBlock = chain[i - 1]
 
-            if(block.lasHash != lastBlock.hash || block.hash != Blockchain.blockHash(block))
+            if(block.lastHash !== lastBlock.hash || block.hash !== Block.blockHash(block)) {
                 return false;
+            }
         }
         return true
     }
 
-    static blockHash(block) {
-        const {timestamp, lastHash, data} = block;
-        return Block.hash(timestamp, lastHash, data)
-    }
 }
 
 
